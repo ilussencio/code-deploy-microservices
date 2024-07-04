@@ -41,7 +41,7 @@ services:
     depends_on:
       - kafka
     ports:
-      - "39000:9000"
+      - "49000:9000"
     environment:
       KAFKA_BROKERCONNECT: kafka:29092
 

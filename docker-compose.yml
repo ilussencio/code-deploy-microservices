@@ -13,7 +13,7 @@ services:
     image: ilussencio/sonar-repository:latest
     container_name: sonar-repositories
     environment:
-        - URI_DATABASE_CONNECTION=mongodb://mongdb
+        - URI_DATABASE_CONNECTION=mongodb://mongodb
         - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     networks:
       - network_bridge

@@ -32,14 +32,10 @@ services:
   sonar-repositories:
     image: ilussencio/sonar-repository:latest
     environment:
-      - URI_DATABASE_CONNECTION=mongodb://mongdb
+      - URI_DATABASE_CONNECTION=mongodb://mongodb
       - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     deploy:
-      replicas: 2
-    depends_on:
-      - mongodb
-      - api-gateway
-      - eurekaserver
+      replicas: 3
     networks:
       - network_bridge
 networks:

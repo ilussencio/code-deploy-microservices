@@ -36,6 +36,11 @@ services:
       - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     deploy:
       replicas: 3
+    #depends
+    depends_on:
+      - mongodb
+      - eurekaserver
+      - api-gateway
     networks:
       - network_bridge
 networks:

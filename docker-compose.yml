@@ -4,17 +4,9 @@ services:
     image: ilussencio/api-gateway:latest
     container_name: api-gateway
     environment:
-        - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
+      - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     ports:
       - "8765:8765"
-    networks:
-      - network_bridge
-  sonar-repositories:
-    image: ilussencio/sonar-repository:latest
-    container_name: sonar-repositories
-    environment:
-        - URI_DATABASE_CONNECTION=mongodb://mongodb
-        - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     networks:
       - network_bridge
   mongodb:
@@ -37,7 +29,19 @@ services:
       - "8761:8761"
     networks:
         - network_bridge
-
+  sonar-repositories:
+    image: ilussencio/sonar-repository:latest
+    environment:
+      - URI_DATABASE_CONNECTION=mongodb://mongdb
+      - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
+    deploy:
+      replicas: 2
+    depends_on:
+      - mongodb
+      - api-gateway
+      - eurekaserver
+    networks:
+      - network_bridge
 networks:
   network_bridge:
     driver: bridge

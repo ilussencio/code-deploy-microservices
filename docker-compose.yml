@@ -43,6 +43,14 @@ services:
       - api-gateway
     networks:
       - network_bridge
+  nfe-qr-code-consult:
+    image: ilussencio/nfeqrcodeconsult:latest
+    environment:
+      - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
+    deploy:
+      replicas: 3
+    networks:
+      - network_bridge
 networks:
   network_bridge:
     driver: bridge

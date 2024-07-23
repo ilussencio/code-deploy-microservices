@@ -46,9 +46,14 @@ services:
   nfe-qr-code-consult:
     image: ilussencio/nfeqrcodeconsult:latest
     environment:
+      - URI_DATABASE_CONNECTION=mongodb://mongodb
       - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     deploy:
       replicas: 3
+    depends_on:
+      - mongodb
+      - eurekaserver
+      - api-gateway
     networks:
       - network_bridge
 networks:

@@ -1,5 +1,14 @@
 version: '3.1'
 services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: users_db
+    ports:
+      - "5432:5432"
   api-gateway:
     image: ilussencio/api-gateway:latest
     container_name: api-gateway
@@ -35,7 +44,7 @@ services:
       - URI_DATABASE_CONNECTION=mongodb://mongodb
       - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     deploy:
-      replicas: 3
+      replicas: 1
     #depends
     depends_on:
       - mongodb
@@ -49,13 +58,44 @@ services:
       - URI_DATABASE_CONNECTION=mongodb://mongodb
       - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     deploy:
-      replicas: 3
+      replicas: 1
     depends_on:
       - mongodb
       - eurekaserver
       - api-gateway
     networks:
       - network_bridge
+  nfe-qrcode-user:
+    image: ilussencio/nfe-qrcode:latest
+    environment:
+      - URI_DATABASE_CONNECTION=mongodb://mongodb
+      - USER_URL:htts://api.srbit.com.br/users
+      - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
+    deploy:
+      replicas: 1
+    depends_on:
+      - mongodb
+      - eurekaserver
+      - api-gateway
+      - user
+    networks:
+      - network_bridge
+  user:
+    image: ilussencio/user:latest
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=users_db
+      - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
+    deploy:
+      replicas: 1
+    depends_on:
+      - mongodb
+      - eurekaserver
+      - api-gateway
+    networks:
+      - network_bridge
+    
 networks:
   network_bridge:
     driver: bridge

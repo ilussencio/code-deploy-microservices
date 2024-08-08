@@ -84,9 +84,7 @@ services:
   user:
     image: ilussencio/user:latest
     environment:
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=users_db
+      - URI_DATABASE_CONNECTION=jdbc:postgresql://postgres:5432/users_db
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
       - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka

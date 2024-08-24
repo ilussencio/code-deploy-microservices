@@ -72,7 +72,7 @@ services:
     image: ilussencio/nfe-qrcode:latest
     environment:
       - URI_DATABASE_CONNECTION=mongodb://mongodb
-      - USER_URL:htts://api.srbit.com.br/users
+      - USER_URL=htts://api.srbit.com.br/users
       - DEFAULTZONE_EUREKA_CONNECTION=http://eurekaserver:8761/eureka
     deploy:
       replicas: 1

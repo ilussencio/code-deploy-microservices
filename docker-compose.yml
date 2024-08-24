@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: users_db
     ports:
       - "5432:5432"
+    networks:
+      - network_bridge
   api-gateway:
     image: ilussencio/api-gateway:latest
     container_name: api-gateway
